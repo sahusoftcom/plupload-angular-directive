@@ -45,16 +45,20 @@
 
 		    <div id="pane1" class="tab-pane active">
 				<pre class="prettyprint linenums languague-css">
+					<textarea>
 <button pl-upload pl-progress-model="percent" pl-auto-upload="true" pl-files-model="files">Upload Files</button>
+</textarea>
 				</pre>
 		    </div>
 
 		    <div id="pane2" class="tab-pane">
 		    	<pre class="prettyprint linenums languague-css">
+		    		<textarea>
 function MyCtrl1($scope) {
 	$scope.percent = ''; // A variable to store the overall percentage of the file uploaded.
 	$scope.files = [];  // Declare an empty array to store the files uploaded.
 }
+	</textarea>
 		    	</pre>
 		    </div>
 
@@ -120,15 +124,19 @@ function MyCtrl1($scope) {
 
 		    <div id="multiPane1" class="tab-pane active">
 				<pre class="prettyprint linenums languague-css">
+					<textarea>
 <a class="btn btn-primary" pl-upload pl-auto-upload="false" pl-files-model="multiFiles" pl-progress-model="multiPercent" pl-instance="uploader">Pick Files</a>
+					</textarea>
 				</pre>
 		    </div>
 
 		    <div id="multiPane2" class="tab-pane">
 		   <pre class="prettyprint linenums languague-css"> 	
+		   	<textarea>
 function MyCtrl1($scope) {
 	$scope.multiFiles = [];  // Declare an empty array to store the files uploaded.
 }
+		</textarea>
 		</pre>
 		    </div>
 
@@ -181,14 +189,18 @@ function MyCtrl1($scope) {
 
 		    	<div id="multiParamsPane1" class="tab-pane active">
 					<pre class="prettyprint linenums languague-css">
+						<textarea>
 <a class="btn btn-primary" pl-upload pl-multi-params-model="multiParams" pl-progress-model="paramsPercent">Upload Files</a>
+						</textarea>
 					</pre>
 		    	</div>
 		    	<div id="multiParamsPane2" class="tab-pane">
 					<pre class="prettyprint linenums languague-css">
+						<textarea>
 function MyCtrl1($scope){
 	$scope.multiParams = {'path':'C:/Users/vaio/'};	
 }
+					</textarea>
 					</pre>
 		    	</div>
 		    	<div id="multiParamsPane3" class="tab-pane">
@@ -221,7 +233,9 @@ function MyCtrl1($scope){
 
 		    <div id="eventPane1" class="tab-pane active">
 				<pre class="prettyprint linenums languague-css">
+					<textarea>
 <a class="btn btn-primary" pl-upload on-file-added="loading=true" on-file-uploaded="loading=false">Upload</a>
+					</textarea>
 <span ng-show="loading">Uploading...</span>
 				</pre>
 		    </div>

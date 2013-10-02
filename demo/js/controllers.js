@@ -17,7 +17,11 @@ function htmlEncode(value) {
 function MyCtrl1($scope) {
 
 	$('pre.prettyprint').each(function(){
-		$(this).html(multiLineHtmlEncode($(this).html()));
+		if(!$(this).find('textarea').length)
+			return;
+
+		$(this).html(multiLineHtmlEncode($(this).find('textarea').val()));
+
 	});
 
 	prettyPrint();
