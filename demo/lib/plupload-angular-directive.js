@@ -86,10 +86,13 @@ angular.module('plupload.module', [])
 				uploader.bind('FilesAdded',function(up,files){
 					
 					//uploader.start();
-					scope.$apply(function(){
+					scope.$apply(function(){							
 
-						if(iAttrs.plFilesModel)
+						if(iAttrs.plFilesModel){
+							if(!angular.isArray(scope.plFilesModel))
+								scope.plFilesModel = [];
 							scope.plFilesModel.push(files[0]);
+						}
 						if(iAttrs.onFileAdded){
 							scope.$parent.$eval(iAttrs.onFileAdded);
 						}
