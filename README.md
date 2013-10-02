@@ -1,3 +1,3 @@
 Angular plupload directive
 --------------------------
-Demo at http://plupload-angular-directive.sahusoft.info/
+Demo and Documentation @ http://plupload-angular-directive.sahusoft.info/
