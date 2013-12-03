@@ -2,8 +2,19 @@ Angular plupload directive
 --------------------------
 > Demo and Documentation @ http://plupload-angular-directive.sahusoft.info/
 
-Roadmap
--------
+The Demo and Documentation page will give you a fair idea on how to use it.
+
+Quick example
+-------------
+
+```
+<button pl-upload pl-progress-model="percent" pl-auto-upload="true" pl-files-model="files">Upload Files</button>
+```
+
+
+
+Upcoming
+--------
 1. Implement a variable $response in onFileUploaded event, so you can write
 
    ```
