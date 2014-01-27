@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('plupload.module', [])
-	.directive('plUpload', [function () {
+	.directive('plUpload', ['$parse', function ($parse) {
 		return {
 			restrict: 'A',
 			scope: {
@@ -43,7 +43,7 @@ angular.module('plupload.module', [])
 					iAttrs.$set('plSilverlightXapUrl','lib/plupload/plupload.flash.silverlight.xap');
 				 }
 				if(typeof scope.plFiltersModel=="undefined"){
-					scope.filters = [{title : "Image files", extensions : "jpg,jpeg,gif,png"}];
+					scope.filters = [{title : "Image files", extensions : "jpg,jpeg,gif,png,tiff,pdf"}];
 					//alert('sf');
 				}
 				else{
@@ -79,7 +79,7 @@ angular.module('plupload.module', [])
 						if(iAttrs.onFileError){
 							scope.$parent.$apply(onFileError);
 						}
-			        	alert("Error: " + err.code + ", Message: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
+			        	alert("Cannot upload, error: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
 			        	up.refresh(); // Reposition Flash/Silverlight
    				 	});
 
@@ -88,8 +88,12 @@ angular.module('plupload.module', [])
 					//uploader.start();
 					scope.$apply(function(){
 
-						if(iAttrs.plFilesModel)
-							scope.plFilesModel.push(files[0]);
+						if(iAttrs.plFilesModel) {
+	    					angular.forEach(files,function(file,key) {	
+	    						scope.plFilesModel.push(file);
+	    					});
+						}
+							
 						if(iAttrs.onFileAdded){
 							scope.$parent.$eval(iAttrs.onFileAdded);
 						}
@@ -100,11 +104,31 @@ angular.module('plupload.module', [])
 
     			});
 
-    			uploader.bind('FileUploaded', function(up, file, res) {
-					if(iAttrs.onFileUploaded){
-							scope.$parent.$apply(iAttrs.onFileUploaded);
+    			   uploader.bind('FileUploaded', function(up, file, res) {
+
+				     if(iAttrs.onFileUploaded){
+				     	if(iAttrs.plFilesModel) {
+				     		scope.$apply(function() {
+				     			angular.forEach(scope.plFilesModel,function(file,key){	
+				     				scope.allUploaded = false;
+	    							if(file.percent==100)
+	    								scope.allUploaded = true;
+	    						});
+	    						if(scope.allUploaded) {
+	    							var fn = $parse(iAttrs.onFileUploaded);	
+	    							fn(scope.$parent, {$response:res});	
+	    						}
+				     		});
+	    					
+						} else {
+					      var fn = $parse(iAttrs.onFileUploaded);
+					      scope.$apply(function(){
+					       fn(scope.$parent, {$response:res});
+					      });	
 						}
-				});
+				      //scope.$parent.$apply(iAttrs.onFileUploaded);
+   					  }
+    				});
 
 				uploader.bind('UploadProgress',function(up,file){
 
