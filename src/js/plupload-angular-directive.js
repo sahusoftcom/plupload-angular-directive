@@ -14,13 +14,13 @@ angular.module('plupload.module', [])
 			link: function (scope, iElement, iAttrs) {
 
 				scope.randomString = function(len, charSet) {
-				    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-				    var randomString = '';
-				    for (var i = 0; i < len; i++) {
-				    	var randomPoz = Math.floor(Math.random() * charSet.length);
-				    	randomString += charSet.substring(randomPoz,randomPoz+1);
-				    }
-				    return randomString;
+					charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+					var randomString = '';
+					for (var i = 0; i < len; i++) {
+						var randomPoz = Math.floor(Math.random() * charSet.length);
+						randomString += charSet.substring(randomPoz,randomPoz+1);
+					}
+					return randomString;
 				}
 
 				if(!iAttrs.id){
@@ -41,15 +41,13 @@ angular.module('plupload.module', [])
 				}
 				if(!iAttrs.plSilverlightXapUrl){
 					iAttrs.$set('plSilverlightXapUrl','lib/plupload/plupload.flash.silverlight.xap');
-				 }
+				}
 				if(typeof scope.plFiltersModel=="undefined"){
 					scope.filters = [{title : "Image files", extensions : "jpg,jpeg,gif,png,tiff,pdf"}];
 					//alert('sf');
-				}
-				else{
+				} else{
 					scope.filters = scope.plFiltersModel;
 				}
-
 
 
 				var options = {
@@ -70,104 +68,98 @@ angular.module('plupload.module', [])
 				}
 
 
-					var uploader = new plupload.Uploader(options);
+				var uploader = new plupload.Uploader(options);
 
-					uploader.init();
+				uploader.init();
 
-					uploader.bind('Error', function(up, err) {
+				uploader.bind('Error', function(up, err) {
+					if(iAttrs.onFileError){
+						scope.$parent.$apply(onFileError);
+					}
 
-						if(iAttrs.onFileError){
-							scope.$parent.$apply(onFileError);
-						}
-			        	alert("Cannot upload, error: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
-			        	up.refresh(); // Reposition Flash/Silverlight
-   				 	});
+					alert("Cannot upload, error: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
+					up.refresh(); // Reposition Flash/Silverlight
+ 				});
 
-				uploader.bind('FilesAdded',function(up,files){
-					
+				uploader.bind('FilesAdded', function(up,files) {
 					//uploader.start();
-					scope.$apply(function(){
-
+					scope.$apply(function() {
 						if(iAttrs.plFilesModel) {
-	    					angular.forEach(files,function(file,key) {	
-	    						scope.plFilesModel.push(file);
-	    					});
+							angular.forEach(files, function(file,key) {
+								scope.plFilesModel.push(file);
+							});
 						}
 							
 						if(iAttrs.onFileAdded){
 							scope.$parent.$eval(iAttrs.onFileAdded);
 						}
 					});
+
 					if(iAttrs.plAutoUpload=="true"){
 						uploader.start();
 					}
+				});
 
-    			});
+				uploader.bind('FileUploaded', function(up, file, res) {
+					if(iAttrs.onFileUploaded) {
+					 	if(iAttrs.plFilesModel) {
+					 		scope.$apply(function() {
+					 			angular.forEach(scope.plFilesModel, function(file,key) {
+					 				scope.allUploaded = false;
+									if(file.percent==100)
+										scope.allUploaded = true;
+								});
 
-    			   uploader.bind('FileUploaded', function(up, file, res) {
+								if(scope.allUploaded) {
+									var fn = $parse(iAttrs.onFileUploaded);
+									fn(scope.$parent, {$response:res});
+								}
 
-				     if(iAttrs.onFileUploaded){
-				     	if(iAttrs.plFilesModel) {
-				     		scope.$apply(function() {
-				     			angular.forEach(scope.plFilesModel,function(file,key){	
-				     				scope.allUploaded = false;
-	    							if(file.percent==100)
-	    								scope.allUploaded = true;
-	    						});
-	    						if(scope.allUploaded) {
-	    							var fn = $parse(iAttrs.onFileUploaded);	
-	    							fn(scope.$parent, {$response:res});	
-	    						}
-				     		});
-	    					
+					 		});
 						} else {
-					      var fn = $parse(iAttrs.onFileUploaded);
-					      scope.$apply(function(){
-					       fn(scope.$parent, {$response:res});
-					      });	
+							var fn = $parse(iAttrs.onFileUploaded);
+							scope.$apply(function(){
+								fn(scope.$parent, {$response:res});
+							});
 						}
-				      //scope.$parent.$apply(iAttrs.onFileUploaded);
-   					  }
-    				});
+						//scope.$parent.$apply(iAttrs.onFileUploaded);
+					}
+				});
 
 				uploader.bind('UploadProgress',function(up,file){
-
 					if(!iAttrs.plProgressModel){
 						return;
 					}
 					
 					if(iAttrs.plFilesModel){
-						scope.$apply(function(){
+						scope.$apply(function() {
 							scope.sum = 0;
-							angular.forEach(scope.plFilesModel,function(file,key){
+
+							angular.forEach(scope.plFilesModel, function(file,key) {
 								scope.sum = scope.sum + file.percent;
 							});
+
 							scope.plProgressModel = scope.sum/scope.plFilesModel.length;
 						});
-					}
-					else{
-						scope.$apply(function(){
+					} else {
+						scope.$apply(function() {
 							scope.plProgressModel = file.percent;
 						});
 					}
-					
-					
+
+
 					if(iAttrs.onFileProgress){
 						scope.$parent.$eval(iAttrs.onFileProgress);
 					}
-    				
-
-    			});
+				});
 
 				if(iAttrs.plInstance){
 					scope.plInstance = uploader;	
 				}
-    			
 
-    			// scope.upload = function(){
-    			// 	uploader.start();
-    			// };
-				
+				// scope.upload = function(){
+				// 	uploader.start();
+				// };
 			}
 		};
 	}])
