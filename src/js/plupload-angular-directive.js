@@ -86,6 +86,7 @@ angular.module('plupload.module', [])
 					scope.$apply(function() {
 						if(iAttrs.plFilesModel) {
 							angular.forEach(files, function(file,key) {
+								if (!scope.plFilesModel) scope.plFilesModel=[];
 								scope.plFilesModel.push(file);
 							});
 						}
