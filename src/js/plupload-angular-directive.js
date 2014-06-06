@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('plupload.module', [])
+angular.module('plupload.directive', [])
 	.service('plUploadService', function() {
 
 		var config = {
@@ -19,7 +19,7 @@ angular.module('plupload.module', [])
 	    };
 
 	})	
-	.directive('plUpload', ['$parse', function ($parse) {
+	.directive('plUpload', ['$parse', 'plUploadService', function ($parse, plUploadService) {
 		return {
 			restrict: 'A',
 			scope: {
