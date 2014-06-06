@@ -5,7 +5,8 @@ angular.module('plupload.module', [])
 
 		var config = {
 			flashPath: 'bower_components/plupload-angular-directive/dist/plupload.flash.swf',
-			silverLightPath: 'bower_components/plupload-angular-directive/dist/plupload.silverlight.xap'
+			silverLightPath: 'bower_components/plupload-angular-directive/dist/plupload.silverlight.xap',
+			uploadPath: 'upload.php'
 		};
 
 	    return {
@@ -51,10 +52,10 @@ angular.module('plupload.module', [])
 					iAttrs.$set('plMaxFileSize','10mb');
 				}
 				if(!iAttrs.plUrl){
-					iAttrs.$set('plUrl','upload.php');
+					iAttrs.$set('plUrl', plUploadService.getConfig('uploadPath'));
 				}
 				if(!iAttrs.plFlashSwfUrl){
-					iAttrs.$set('plFlashSwfUrl',plUploadService.getConfig('flashPath'));
+					iAttrs.$set('plFlashSwfUrl', plUploadService.getConfig('flashPath'));
 				}
 				if(!iAttrs.plSilverlightXapUrl){
 					iAttrs.$set('plSilverlightXapUrl', plUploadService.getConfig('silverLightPath'));
