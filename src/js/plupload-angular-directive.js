@@ -1,6 +1,23 @@
 'use strict';
 
 angular.module('plupload.module', [])
+	.service('plUploadService', function() {
+
+		var config = {
+			flashPath: 'bower_components/plupload-angular-directive/dist/plupload.flash.swf',
+			silverLightPath: 'bower_components/plupload-angular-directive/dist/plupload.silverlight.xap'
+		};
+
+	    return {
+	        getData: function(key) {
+	        	return config[key];
+	        },
+	        setData: function(key, val) {
+	        	config[key] = val;
+	        }
+	    };
+
+	})	
 	.directive('plUpload', ['$parse', function ($parse) {
 		return {
 			restrict: 'A',
@@ -37,10 +54,10 @@ angular.module('plupload.module', [])
 					iAttrs.$set('plUrl','upload.php');
 				}
 				if(!iAttrs.plFlashSwfUrl){
-					iAttrs.$set('plFlashSwfUrl','lib/plupload/plupload.flash.swf');
+					iAttrs.$set('plFlashSwfUrl',plUploadService.getConfig('flashPath'));
 				}
 				if(!iAttrs.plSilverlightXapUrl){
-					iAttrs.$set('plSilverlightXapUrl','lib/plupload/plupload.flash.silverlight.xap');
+					iAttrs.$set('plSilverlightXapUrl', plUploadService.getConfig('silverLightPath'));
 				}
 				if(typeof scope.plFiltersModel=="undefined"){
 					scope.filters = [{title : "Image files", extensions : "jpg,jpeg,gif,png,tiff,pdf"}];
