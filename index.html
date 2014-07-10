@@ -120,7 +120,15 @@
                         <div hljs>angular.module('myApp', ['plupload.directive']);</div>
                     </li>
                     <li>Configure paths (optional using pluploadServiceProvider)
-                        <div hljs></div>
+                        <div hljs>angular.module('myApp', ['plupload.directive']).
+  config(['plUploadServiceProvider', function(plUploadServiceProvider) {
+
+
+    plUploadServiceProvider.setConfig('flashPath', 'bower_components/plupload-angular-directive/plupload.flash.swf');
+    plUploadServiceProvider.setConfig('silverLightPath', 'bower_components/plupload-angular-directive/plupload.silverlight.xap');
+    plUploadServiceProvider.setConfig('uploadPath', 'upload.php');
+
+  }])</div>
                     </li>
                     <li>Use it with any button
                         <div hljs><button pl-upload>Upload Files</button></div>
@@ -144,10 +152,12 @@
 
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <a class="btn btn-primary input-block-level ng-isolate-scope ng-scope" pl-upload="" pl-progress-model="percent" pl-files-model="files" id="8ZUSE" pl-auto-upload="true" pl-max-file-size="10mb" pl-url="upload.php" pl-flash-swf-url="lib/plupload/plupload.flash.swf" pl-silverlight-xap-url="lib/plupload/plupload.flash.silverlight.xap" style="position: relative; z-index: 0;">Upload Files</a>
+                                    <a class="btn btn-primary input-block-level ng-isolate-scope ng-scope" pl-upload="" pl-progress-model="percent" pl-files-model="files" id="8ZUSE" pl-auto-upload="true" pl-max-file-size="10mb" pl-flash-swf-url="lib/plupload/plupload.flash.swf" pl-silverlight-xap-url="lib/plupload/plupload.flash.silverlight.xap" style="position: relative; z-index: 0;">Upload Files</a>
                                 </div>
                                 <div class="col-sm-9">
-                                    <div class="progress" percent="percent"><!-- ngRepeat: bar in bars --><div class="bar ng-scope" ng-class="type &amp;&amp; &quot;bar-&quot; + type" ng-repeat="bar in bars" width="bar.to" old="bar.from" animate="bar.animate" type="bar.type" style="width: 0%;"></div></div>
+
+                                    <progressbar value="percent" animate="true"></progressbar>
+
                                 </div>
                             </div>
 
@@ -204,13 +214,17 @@
 
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <a class="form-control btn btn-primary" pl-upload="" pl-auto-upload="false" pl-files-model="multiFiles" pl-progress-model="multiPercent" pl-instance="uploader" pl-max-file-size="10mb" pl-url="upload.php" pl-flash-swf-url="lib/plupload/plupload.flash.swf" pl-silverlight-xap-url="lib/plupload/plupload.flash.silverlight.xap">Pick Files</a>
+                                        <a class="form-control btn btn-primary" pl-upload="" pl-auto-upload="false" pl-files-model="multiFiles" pl-progress-model="multiPercent" pl-instance="uploader" pl-max-file-size="10mb" pl-flash-swf-url="lib/plupload/plupload.flash.swf" pl-silverlight-xap-url="lib/plupload/plupload.flash.silverlight.xap">Pick Files</a>
                                     </div>
                                     <div class="col-sm-3">
                                         <a class="form-control btn btn-primary input-block-level" ng-click="uploader.start()">Upload</a>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="progress" percent="multiPercent"><!-- ngRepeat: bar in bars --><div class="bar ng-scope" ng-class="type &amp;&amp; &quot;bar-&quot; + type" ng-repeat="bar in bars" width="bar.to" old="bar.from" animate="bar.animate" type="bar.type" style="width: 0%;"></div></div>
+
+                                        <progressbar value="multiPercent" animate="true"></progressbar>
+
+                                        <!-- <div class="progress" percent="multiPercent"><div class="bar ng-scope" ng-class="type &amp;&amp; &quot;bar-&quot; + type" ng-repeat="bar in bars" width="bar.to" old="bar.from" animate="bar.animate" type="bar.type" style="width: 0%;"></div></div> -->
+                                        
                                     </div>
                                 </div>
                                 
@@ -481,7 +495,7 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/highlightjs/highlight.pack.js"></script>
     <script src="bower_components/angular-highlightjs/angular-highlightjs.min.js"></script>
-    <script src="bower_components/plupload-angular-directive/plupload-angular-directive.min.js"></script>
+    <script src="bower_components/plupload-angular-directive/dist/plupload-angular-directive.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

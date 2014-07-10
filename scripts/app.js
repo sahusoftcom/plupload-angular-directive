@@ -17,19 +17,11 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.bootstrap',
-    'hljs'
+    'hljs',
+    'plupload.directive'
   ])
-  .config(function ($routeProvider) {
-    /*$routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });*/
+  .config(function ($routeProvider, plUploadServiceProvider) {
+
+    plUploadServiceProvider.setConfig('uploadPath', 'upload-controller');
+
   });
