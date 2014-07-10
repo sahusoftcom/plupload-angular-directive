@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('plupload.directive', [])
-	.service('plUploadService', function() {
+	.provider('plUploadService', function() {
 
 		var config = {
 			flashPath: 'bower_components/plupload-angular-directive/dist/plupload.flash.swf',
@@ -9,14 +9,24 @@ angular.module('plupload.directive', [])
 			uploadPath: 'upload.php'
 		};
 
-	    return {
-	        getData: function(key) {
-	        	return config[key];
-	        },
-	        setData: function(key, val) {
+		this.setConfig = function(key, val) {
 	        	config[key] = val;
-	        }
-	    };
+	        };
+
+	    this.getConfig =  function(key) {
+	        	return config[key];
+	        };
+
+	    var that = this;
+
+	    this.$get = [function(){
+
+		    return {
+		        getConfig: that.getConfig,
+		        setConfig: that.setConfig
+		    };
+
+		}];
 
 	})	
 	.directive('plUpload', ['$parse', 'plUploadService', function ($parse, plUploadService) {
