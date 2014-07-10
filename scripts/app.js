@@ -22,6 +22,6 @@ angular
   ])
   .config(function ($routeProvider, plUploadServiceProvider) {
 
-    plUploadServiceProvider.setConfig('uploadPath', 'upload-controller');
+    plUploadServiceProvider.setConfig('uploadPath', '/plupload-angular-directive/upload-controller');
 
   });
