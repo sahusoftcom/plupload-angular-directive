@@ -1,0 +1,388 @@
+<a href="https://github.com/sahusoftcom/plupload-angular-directive"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+<div class="row">
+	<div class="span6">
+		<h3>Single File Upload</h3>
+		<div class="row-fluid">
+			<div class="span3">
+				<a class="btn btn-primary input-block-level" pl-upload pl-progress-model="percent" pl-files-model="files">Upload Files</a>
+			</div>
+			<div class="span9">
+				<progress percent="percent"></progress>
+			</div>
+		</div>
+
+		<table ng-show="files.length" class="table">
+			<th>#</th>
+			<th>Name</th>
+			<th>Size</th>
+			<th>Loaded</th>
+			<th>Percent Uploaded</th>
+			<th>Status</th>
+			<tr ng-repeat="file in files">
+				<td>{{file.id}}</td>
+				<td>{{file.name}}</td>
+				<td>{{file.size}}</td>
+				<td>{{file.loaded}}</td>
+				<td>{{file.percent}}</td>
+				<td>{{file.status}}</td>
+			</tr>
+		</table>
+
+
+	</div>
+
+	<div class="span1">
+	</div>
+
+	<div class="span5">
+
+		<div class="tabbable">
+		  <ul class="nav nav-tabs">
+		    <li class="active"><a href="#pane1" data-toggle="tab">Html</a></li>
+		    <li><a href="#pane2" data-toggle="tab">Javascript</a></li>
+		    <li><a href="#pane3" data-toggle="tab">How does it work?</a></li>
+		  </ul>
+		  <div class="tab-content">
+
+		    <div id="pane1" class="tab-pane active">
+				<pre class="prettyprint linenums languague-css">
+					<textarea>
+<button pl-upload pl-progress-model="percent" pl-auto-upload="true" pl-files-model="files">Upload Files</button>
+</textarea>
+				</pre>
+		    </div>
+
+		    <div id="pane2" class="tab-pane">
+		    	<pre class="prettyprint linenums languague-css">
+		    		<textarea>
+function MyCtrl1($scope) {
+	$scope.percent = ''; // A variable to store the overall percentage of the file uploaded.
+	$scope.files = [];  // An empty array to store the files uploaded.
+}
+	</textarea>
+		    	</pre>
+		    </div>
+
+		    <div id="pane3" class="tab-pane">
+		    	<ul class="inline">
+		    		<li> percent is a variable that stores the average percent of the files uploaded.Pass the variable in pl-progress-model attribute.</li><br>
+		    		<li>files is an array that stores the objects of files uploaded.</li><br>
+		    		<li>The list of files is shown in a table using the files array.</li><br>
+		    		<li>pl-auto-upload attribute is used to declare if you want to upload the file directly after selecting.Pass true or false accordingly.</li><br>
+		    		<li>progress bar is shown by a directive provided by angular-ui.Refer it at http://angular-ui.github.io/bootstrap/</li>
+		    	</ul>
+		    </div>
+		  </div><!-- /.tab-content -->
+		</div><!-- /.tabbable -->
+
+
+	</div>	
+</div>
+<hr>
+<div class="row">
+	<div class="span6">
+		<h3>Mutiple Files Upload</h3>
+		<div class="row-fluid">
+			<div class="span3">
+				<a class="btn btn-primary input-block-level" pl-upload pl-auto-upload="false" pl-files-model="multiFiles" pl-progress-model="multiPercent" pl-instance="uploader">Pick Files</a><br>
+				<a class="btn btn-primary input-block-level" ng-click="uploader.start()">Upload Files</a>
+			</div>
+			<div class="span9">
+				<br><br><br>
+				<progress percent="multiPercent"></progress>
+			</div>
+		</div>
+		
+
+		<table ng-show="multiFiles.length" class="table">
+			<th>#</th>
+			<th>Name</th>
+			<th>Size</th>
+			<th>Loaded</th>
+			<th>Percent Uploaded</th>
+			<th>Status</th>
+			<tr ng-repeat="file in multiFiles">
+				<td>{{file.id}}</td>
+				<td>{{file.name}}</td>
+				<td>{{file.size}}</td>
+				<td>{{file.loaded}}</td>
+				<td><progress percent="file.percent"></progress></td>
+				<td>{{file.status}}</td>
+			</tr>
+		</table>
+		
+	</div>
+	<div class="span1">
+	</div>
+	<div class="span5">
+		<div class="tabbable">
+		  <ul class="nav nav-tabs">
+		    <li class="active"><a href="#multiPane1" data-toggle="tab">Html</a></li>
+		    <li><a href="#multiPane2" data-toggle="tab">Javascript</a></li>
+		    <li><a href="#multiPane3" data-toggle="tab">How does it work?</a></li>
+		  </ul>
+		  <div class="tab-content">
+
+		    <div id="multiPane1" class="tab-pane active">
+				<pre class="prettyprint linenums languague-css">
+					<textarea>
+<a class="btn btn-primary" pl-upload pl-auto-upload="false" pl-files-model="multiFiles" pl-progress-model="multiPercent" pl-instance="uploader">Pick Files</a>
+<a class="btn btn-primary input-block-level" ng-click="uploader.start()">Upload Files</a>
+				</textarea>
+				</pre>
+		    </div>
+
+		    <div id="multiPane2" class="tab-pane">
+		   <pre class="prettyprint linenums languague-css"> 	
+		   	<textarea>
+function MyCtrl1($scope) {
+	$scope.multiFiles = [];  // Declare an empty array to store the files uploaded.
+}
+		</textarea>
+		</pre>
+		    </div>
+
+		    <div id="multiPane3" class="tab-pane">
+
+		    	<ul class="inline">
+		    		<li>For Uploading multiple files with a single upload button you need to define the attribute pl-auto-upload to be false.</li><br>
+
+		    		<li>multiFiles is an array that stores which stores the objects of files added to the array.</li><br>
+
+		    		<li>The list of files is shown in a table using the multiFiles array.</li><br>
+
+		    		<li>multiPercent is a variable that stores the average percent of the files uploaded.Pass the variable in pl-progress-model attribute</li><br>
+
+		    		<li>pl-instance attribute is used to get the object of the plupload class.Pass the variable in this attribute to get a instance of the plupload object.</li><br>
+
+		    		<li>In this example Upload Files is a button which is used to upload all the files in the multiFiles array, when this button is clicked uploader.start() function is called to start uploading the files.(uploader is the object of plupload)</li><br>
+
+		    		<li>progress bar is shown by a directive provided by angular-ui.Refer it at http://angular-ui.github.io/bootstrap/</li>
+		    	</ul>
+		    </div>
+		  </div><!-- /.tab-content -->
+		</div><!-- /.tabbable -->
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="span6">
+		<h3>Passing Parameter to upload script</h3>
+		<div class="row-fluid">
+			<div class="span3">
+				<a class="btn btn-primary" pl-upload pl-multi-params-model="multiParams" pl-progress-model="paramsPercent">Upload Files</a>
+			</div>
+			<div class="span9">
+				<progress percent="paramsPercent"></progress>
+			</div>
+			
+		</div>
+	</div>
+	<div class="span1">
+	</div>
+	<div class="span5">
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#multiParamsPane1" data-toggle="tab">Html</a></li>
+				<li><a href="#multiParamsPane2" data-toggle="tab">Javascript</a></li>
+				<li><a href="#multiParamsPane3" data-toggle="tab">How does it work?</a></li>
+			</ul>
+			<div class="tab-content">
+
+		    	<div id="multiParamsPane1" class="tab-pane active">
+					<pre class="prettyprint linenums languague-css">
+						<textarea>
+<a class="btn btn-primary" pl-upload pl-multi-params-model="multiParams" pl-progress-model="paramsPercent">Upload Files</a>
+						</textarea>
+					</pre>
+		    	</div>
+		    	<div id="multiParamsPane2" class="tab-pane">
+					<pre class="prettyprint linenums languague-css">
+						<textarea>
+function MyCtrl1($scope){
+	$scope.multiParams = {'path':'C:/Users/vaio/'};	
+}
+					</textarea>
+					</pre>
+		    	</div>
+		    	<div id="multiParamsPane3" class="tab-pane">
+					<ul>
+						<li>Pass an object with the key value and its data value in pl-multi-params-model.</li><br>
+						<li>This object is passed to the upload script and can be used in upload script. In this example passed data can be accesed from $_REQUEST['path'].</li>
+					</ul>
+		    	</div>
+			</div> <!-- end tab content --> 
+		</div> <!--end tabbalbe -->
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="span6">
+		<h3>Events on upload</h3>
+		<a class="btn btn-primary" pl-upload on-file-added="loading=true" on-file-uploaded="loading=false">Upload</a>
+		<span ng-show="loading">Uploading...</span>
+	</div>
+	<div class="span1">
+	</div>
+	<div class="span5">
+		<div class="tabbable">
+		  <ul class="nav nav-tabs">
+		    <li class="active"><a href="#eventPane1" data-toggle="tab">Html</a></li>
+		    <li><a href="#eventPane2" data-toggle="tab">Javascript</a></li>
+		    <li><a href="#eventPane3" data-toggle="tab">How does it work?</a></li>
+		  </ul>
+		  <div class="tab-content">
+
+		    <div id="eventPane1" class="tab-pane active">
+				<pre class="prettyprint linenums languague-css">
+					<textarea>
+<a class="btn btn-primary" pl-upload on-file-added="loading=true" on-file-uploaded="loading=false">Upload</a>
+					</textarea>
+<span ng-show="loading">Uploading...</span>
+				</pre>
+		    </div>
+
+		    <div id="eventPane2" class="tab-pane">
+		    	<pre class="prettyprint linenums languague-css">
+
+		    	</pre>
+		    </div>
+
+		    <div id="eventPane3" class="tab-pane">
+		    	<ul class="inline">
+		    		<li>A variable loading is set to true when the file is added to queue using the on-file-added attribute.</li><br>
+		    		<li>The variable loading is then set to false when the file gets uploaded.</li><br>
+		    		<li>So the variable loading is true while the file is uploading.</li><br>
+		    		<li>This is how the attributes on-file-added,on-file-uploaded etc can be used.</li>
+		    	</ul>
+		    </div>
+		  </div><!-- /.tab-content -->
+		</div><!-- /.tabbable -->
+	</div>
+
+</div>
+<hr>
+<div class="row">
+	<div class="span10">
+		<h3>Directive Attributes</h3>
+		<table class="table table-bordered">
+			<th>Attribute</th>
+			<th>Value</th>
+			<th>Explanation</th>
+			<th>Type</th>
+			<th>Default Value</th>
+			<tr>
+				<td>pl-upload</td>
+				<td></td>
+				<td>Pass this Parameter to turn your button into pl-upload.</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>pl-auto-upload</td>
+				<td>true/false</td>
+				<td>Pass true or false as string to turn your button as auto upload or to pick files with your button.</td>
+				<td>String</td>
+				<td>true</td>
+			</tr>
+			<tr>
+				<td>pl-files-model</td>
+				<td>An empty array</td>
+				<td>Pass an empty array to store the files uploaded.<strong>An empty array must be defined to store the files.</strong></td>
+				<td>Two way binding model</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>pl-progress-model</td>
+				<td>A variable</td>
+				<td>Pass a variable to store the percent of file uploaded.</td>
+				<td>Two way binding model</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>pl-instance</td>
+				<td>An object</td>
+				<td>Pass an object to get the instance of plupload class, you can now customize the uploader object the way you want.</td>
+				<td>Two way binding model</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>pl-url</td>
+				<td>A string</td>
+				<td>Pass the path of the upload script.</td>
+				<td>String</td>
+				<td>upload.php</td>
+			</tr>
+			<tr>
+				<td>pl-max-file-size</td>
+				<td>A string</td>
+				<td>Pass the max size of the file.</td>
+				<td>String</td>
+				<td>10mb</td>
+			</tr>
+			<tr>
+				<td>pl-flash-swf-url</td>
+				<td>A string</td>
+				<td>Pass the flash swf url.</td>
+				<td>String</td>
+				<td>lib/plupload/plupload.flash.swf</td>
+			</tr>
+			<tr>
+				<td>pl-silverlight-xap-url</td>
+				<td>A string</td>
+				<td>Pass the silverlight xap url.</td>
+				<td>String</td>
+				<td>lib/plupload/plupload.flash.silverlight.xap</td>
+			</tr>
+			<tr>
+				<td>pl-filters-model</td>
+				<td>An array</td>
+				<td>Pass an array with the title and extensions of files you want to upload</td>
+				<td>Two way binding model</td>
+				<td>[{title : "Image files", extensions : "jpg,jpeg,gif,png"}]</td>
+			</tr>
+			<tr>
+				<td>pl-multi-params-model</td>
+				<td>An object with its parameter and value.Example-{'path':'C:/Users/vaio/'}</td>
+				<td>Pass an object with the params and its value you want to send to the upload script</td>
+				<td>Two way binding model</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>id</td>
+				<td>A unique id</td>
+				<td>Pass a id to your button if u want it to be the browse button.If not passed the directive assigns a unique id to the button.</td>
+				<td>String</td>
+				<td>a random unique id.</td>
+			</tr>
+		</table>
+		<hr>
+		<h3>Directive events</h3>
+		<table class="table table-bordered">
+			<th>Attribute</th>
+			<th>Value</th>
+			<th>Explanation</th>
+			<tr>
+				<td>on-file-added</td>
+				<td>An evaluated value.</td>
+				<td>Pass an evaluated value which will be applied once the file is added to queue.Example- <strong>&lt;button pl-upload on-file-added='x=5'&gt;Upload&lt;/button&gt;</strong></td>
+			</tr>
+			<tr>
+				<td>on-file-uploaded</td>
+				<td>An evaluated value.</td>
+				<td>Pass an evaluated value which will be applied once the file is uploaded.Example- <strong>&lt;button pl-upload on-file-uploaded='uploaded()'&gt;Upload&lt;/button&gt;</strong></td>
+			</tr>
+			<tr>
+				<td>on-file-progress</td>
+				<td>An evaluated value.</td>
+				<td>Pass an evaluated value which will be applied once the file is in uploading progress.Example- <strong>&lt;button pl-upload on-file-progress='progress=true'&gt;Upload&lt;/button&gt;</strong></td>
+			</tr>
+			<tr>
+				<td>on-file-error</td>
+				<td>An evaluated value.</td>
+				<td>Pass an evaluated value which will be applied if there is an error in uploading.Example- <strong>&lt;button pl-upload on-file-error='error()'&gt;Upload&lt;/button&gt;</strong></td>
+			</tr>
+		</table>
+	</div>
+
+</div>

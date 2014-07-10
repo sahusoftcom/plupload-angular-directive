@@ -100,9 +100,39 @@
     	
         </div>
 
-    	<div class="row marketing">
+        <h1>Installation</h1>
+        <div class="row">
+            <div class="col-sm-12">
+                <ol>
+                    <li>Install
+                        <ul>
+                            <li>Using bower
+                                <div hljs>$ bower install plupload-angular-directive</div>
+                            </li>
+                            <li>Or <a href="https://github.com/sahusoftcom/plupload-angular-directive/archive/master.zip">Download</a><br /><br />
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Include files (Note: This file contains plUpload script, you don't need to include plupload separately)
+                        <div hljs><script src="bower_components/plupload-angular-directive/plupload-angular-directive.min.js"></script></div>
+                    </li>
+                    <li>Inject Module
+                        <div hljs>angular.module('myApp', ['plupload.directive']);</div>
+                    </li>
+                    <li>Configure paths (optional using pluploadServiceProvider)
+                        <div hljs></div>
+                    </li>
+                    <li>Use it with any button
+                        <div hljs><button pl-upload>Upload Files</button></div>
+                    </li>
+                </ol>
+            </div>
+        </div>
 
-            <div class="row">
+
+        <h1>Examples</h1>
+
+    	<div class="row">
 
                 <div class="col-sm-6">
 
@@ -236,8 +266,6 @@
                         </div>
 
                     </div>
-
-                </div>
 
             </div>
 
@@ -421,11 +449,6 @@
     <!-- /.container -->
 
 
-    <div style="position: fixed; z-index:99123131; top:0; left:0;right:0; bottom:0; background: rgba(0,0,0,0.75); text-align:center; color: #FFF; font-size: 36px; padding-top:100px">
-        Under construction
-    </div>
-
-
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <!-- <script>
@@ -458,6 +481,7 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/highlightjs/highlight.pack.js"></script>
     <script src="bower_components/angular-highlightjs/angular-highlightjs.min.js"></script>
+    <script src="bower_components/plupload-angular-directive/plupload-angular-directive.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

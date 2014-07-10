@@ -1,0 +1,39 @@
+{
+  "name": "plupload-angular-directive",
+  "homepage": "https://github.com/sahusoftcom/plupload-angular-directive",
+  "authors": [
+    "Sanket <sanketsahu@gmail.com>",
+    "Saurabh <saurabhsahu13@gmail.com>"
+  ],
+  "description": "An angular JS wrapper for plUpload with the latest plupload build files included",
+  "main": "dist/plupload-angular-directive.min.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "plupload",
+    "angular",
+    "directive",
+    "file",
+    "upload"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.1.1",
+  "_release": "0.1.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.1",
+    "commit": "9b570ae0d2e48eeff80396f47eea230728d699c3"
+  },
+  "_source": "git://github.com/sahusoftcom/plupload-angular-directive.git",
+  "_target": "~0.1.1",
+  "_originalSource": "plupload-angular-directive",
+  "_direct": true
+}
