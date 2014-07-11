@@ -1,5 +1,7 @@
-Angular plupload directive
---------------------------
+# [Angular plupload directive](http://sahusoftcom.github.io/plupload-angular-directive)
+
+[![Bower version](https://badge.fury.io/bo/plupload-angular-directive.svg)](http://badge.fury.io/bo/plupload-angular-directive)
+
 > Demo and Documentation @ http://sahusoftcom.github.io/plupload-angular-directive
 
 The Demo and Documentation page will give you a fair idea on how to use it.
