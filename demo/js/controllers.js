@@ -32,6 +32,13 @@ function MyCtrl1($scope) {
 	$scope.filters = [{title : "Image files", extensions : "jpg,jpeg,gif,png"}];
 	$scope.multiParams = {'path':'C:/Users/vaio/'};
 	//$scope.uploader = {};
+
+
+	$scope.$watch('uploader', function(x){
+		if(x)
+			console.log(x);
+	});
+
 	$scope.upload = function(){
 		//console.log($scope.uploader);
 		alert('sdf');

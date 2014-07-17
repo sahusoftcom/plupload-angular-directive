@@ -98,6 +98,8 @@ angular.module('plupload.directive', [])
 
 				var uploader = new plupload.Uploader(options);
 
+				uploader.settings.headers = plUploadService.getConfig('headers');
+
 				uploader.init();
 
 				uploader.bind('Error', function(up, err) {

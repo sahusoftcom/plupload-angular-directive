@@ -9,6 +9,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives','
 
     plUploadServiceProvider.setConfig('flashPath', '/dist/plupload.flash.swf');
     plUploadServiceProvider.setConfig('silverLightPath', '/dist/plupload.silverlight.xap');
+    plUploadServiceProvider.setConfig('headers', {'X-abc': 5});
 
   }]).run(['plUploadService', function(plUploadService){
 
