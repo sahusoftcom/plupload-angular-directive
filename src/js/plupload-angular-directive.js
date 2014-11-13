@@ -87,7 +87,8 @@ angular.module('plupload.directive', [])
 						url : iAttrs.plUrl,
 						flash_swf_url : iAttrs.plFlashSwfUrl,
 						silverlight_xap_url : iAttrs.plSilverlightXapUrl,
-						filters : scope.filters
+						filters : scope.filters,
+						drop_element: iAttrs.plDropElement
 				}
 
 
