@@ -188,9 +188,10 @@ angular.module('plupload.directive', [])
 					scope.plInstance = uploader;	
 				}
 
-				// scope.upload = function(){
-				// 	uploader.start();
-				// };
+				scope.$on("$destroy", function(){
+                    			uploader.destroy();
+                		});
+                
 			}
 		};
 	}])
