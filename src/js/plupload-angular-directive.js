@@ -29,7 +29,7 @@ angular.module('plupload.directive', [])
 		}];
 
 	})	
-	.directive('plUpload', ['$parse', 'plUploadService', function ($parse, plUploadService) {
+	.directive('plUpload', ['$parse', '$log', 'plUploadService', function ($parse, $log, plUploadService) {
 		return {
 			restrict: 'A',
 			scope: {
@@ -87,7 +87,8 @@ angular.module('plupload.directive', [])
 						url : iAttrs.plUrl,
 						flash_swf_url : iAttrs.plFlashSwfUrl,
 						silverlight_xap_url : iAttrs.plSilverlightXapUrl,
-						filters : scope.filters
+						filters : scope.filters,
+						drop_element: iAttrs.plDropElement
 				}
 
 
@@ -104,10 +105,11 @@ angular.module('plupload.directive', [])
 
 				uploader.bind('Error', function(up, err) {
 					if(iAttrs.onFileError){
-						scope.$parent.$apply(onFileError);
-					}
+						scope.$parent.$apply(iAttrs.onFileError);
+					} 
+					
+					$log.error("Cannot upload, error: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
 
-					alert("Cannot upload, error: " + err.message + (err.file ? ", File: " + err.file.name : "") + "");
 					up.refresh(); // Reposition Flash/Silverlight
  				});
 
@@ -116,6 +118,7 @@ angular.module('plupload.directive', [])
 					scope.$apply(function() {
 						if(iAttrs.plFilesModel) {
 							angular.forEach(files, function(file,key) {
+								if (!scope.plFilesModel) scope.plFilesModel=[];
 								scope.plFilesModel.push(file);
 							});
 						}
@@ -138,29 +141,44 @@ angular.module('plupload.directive', [])
                 });
 
 				uploader.bind('FileUploaded', function(up, file, res) {
-					if(iAttrs.onFileUploaded) {
-					 	if(iAttrs.plFilesModel) {
-					 		scope.$apply(function() {
-					 			angular.forEach(scope.plFilesModel, function(file,key) {
-					 				scope.allUploaded = false;
-									if(file.percent==100)
-										scope.allUploaded = true;
-								});
-
-								if(scope.allUploaded) {
-									var fn = $parse(iAttrs.onFileUploaded);
-									fn(scope.$parent, {$response:res});
-								}
-
-					 		});
-						} else {
-							var fn = $parse(iAttrs.onFileUploaded);
-							scope.$apply(function(){
-								fn(scope.$parent, {$response:res});
-							});
-						}
-						//scope.$parent.$apply(iAttrs.onFileUploaded);
-					}
+					    //We are going to make some refactor here.
+			                    //The idea behind is always update files with the server response value
+			                    //And also launch the eventi if neeed
+			
+			                    //If we have the model...
+			                    if(iAttrs.plFilesModel) {
+			                        //Apply on scope...
+			                        scope.$apply(function() {
+			
+			                            //All files are uploaded?
+			                            scope.allUploaded = false;
+			
+			                            angular.forEach(scope.plFilesModel, function($file, key) {
+			
+			                                //Bug FIX, this logic will set allUploaded right
+			                                if(file.percent != 100) {
+			                                    scope.allUploaded = false;
+			                                } else if(file.id == $file.id) { //If the file is the same that we are reciving...
+			                                    //Set response on the file
+			                                    $file.response = JSON.parse(res.response);
+			
+			                                    //Need throw event? throw it
+			                                    if(iAttrs.onFileUploaded) {
+			                                        var fn = $parse(iAttrs.onFileUploaded);
+			                                        fn(scope.$parent, {$response:res});
+			                                    }
+			                                }
+			
+			                            });
+			                        });
+			                    }
+			                    //We doesn't have model but we have the event
+			                    else if(!iAttrs.plFilesModel && iAttrs.onFileUploaded) {
+			                        var fn = $parse(iAttrs.onFileUploaded);
+			                        scope.$apply(function(){
+			                            fn(scope.$parent, {$response:res});
+			                        });
+			                    }
 				});
 
 				uploader.bind('UploadProgress',function(up,file){
@@ -194,9 +212,10 @@ angular.module('plupload.directive', [])
 					scope.plInstance = uploader;	
 				}
 
-				// scope.upload = function(){
-				// 	uploader.start();
-				// };
+				scope.$on("$destroy", function(){
+                    			uploader.destroy();
+                		});
+                
 			}
 		};
 	}])
