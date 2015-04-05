@@ -125,9 +125,7 @@ angular.module('plupload.directive', [])
 							
 						if(iAttrs.onFileAdded){
 							var fn = $parse(iAttrs.onFileAdded);
-							scope.$apply(function(){
-								fn(scope.$parent, {$files:files});
-							});
+							fn(scope.$parent, {$files:files});
 						}
 					});
 
