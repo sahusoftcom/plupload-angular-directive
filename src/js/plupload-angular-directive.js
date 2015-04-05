@@ -58,6 +58,9 @@ angular.module('plupload.directive', [])
 				if(!iAttrs.plAutoUpload){
 					iAttrs.$set('plAutoUpload','true');
 				}
+				if(!iAttrs.plMultiSelection){
+					iAttrs.$set('plMultiSelection','true');
+				}
 				if(!iAttrs.plMaxFileSize){
 					iAttrs.$set('plMaxFileSize','10mb');
 				}
@@ -81,7 +84,7 @@ angular.module('plupload.directive', [])
 				var options = {
 					runtimes : 'html5,flash,silverlight',
 						browse_button : iAttrs.id,
-						multi_selection: true,
+						multi_selection: iAttrs.plMultiSelection.toLowerCase() == 'true',
 				//		container : 'abc',
 						max_file_size : iAttrs.plMaxFileSize,
 						url : iAttrs.plUrl,
