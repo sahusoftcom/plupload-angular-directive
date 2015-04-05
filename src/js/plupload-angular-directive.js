@@ -135,6 +135,13 @@ angular.module('plupload.directive', [])
 						uploader.start();
 					}
 				});
+				
+                uploader.bind('BeforeUpload', function(up, file) {
+                    if(iAttrs.onBeforeUpload){
+                        var fn = $parse(iAttrs.onBeforeUpload);
+               			fn(scope.$parent, {$file:file});
+                    }
+                });
 
 				uploader.bind('FileUploaded', function(up, file, res) {
 					    //We are going to make some refactor here.
