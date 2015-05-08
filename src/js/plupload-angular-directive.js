@@ -127,7 +127,8 @@ angular.module('plupload.directive', [])
 						}
 							
 						if(iAttrs.onFileAdded){
-							scope.$parent.$eval(iAttrs.onFileAdded);
+							var fn = $parse(iAttrs.onFileAdded);
+							fn(scope.$parent, {$files:files});
 						}
 					});
 
@@ -168,7 +169,7 @@ angular.module('plupload.directive', [])
 			                                    //Need throw event? throw it
 			                                    if(iAttrs.onFileUploaded) {
 			                                        var fn = $parse(iAttrs.onFileUploaded);
-			                                        fn(scope.$parent, {$response:res});
+			                                        fn(scope.$parent, {$response:res, $file:file});
 			                                    }
 			                                }
 			
@@ -179,7 +180,7 @@ angular.module('plupload.directive', [])
 			                    else if(!iAttrs.plFilesModel && iAttrs.onFileUploaded) {
 			                        var fn = $parse(iAttrs.onFileUploaded);
 			                        scope.$apply(function(){
-			                            fn(scope.$parent, {$response:res});
+			                            fn(scope.$parent, {$response:res, $file:file});
 			                        });
 			                    }
 				});
@@ -207,7 +208,10 @@ angular.module('plupload.directive', [])
 
 
 					if(iAttrs.onFileProgress){
-						scope.$parent.$eval(iAttrs.onFileProgress);
+						var fn = $parse(iAttrs.onFileProgress);
+						scope.$apply(function(){
+							fn(scope.$parent, {$file:file});
+						});
 					}
 				});
 
