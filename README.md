@@ -1,3 +1,5 @@
+# This repo is not being maintained anymore. Use it on your own.
+
 # [Angular plupload directive](http://sahusoftcom.github.io/plupload-angular-directive)
 
 [![Bower version](https://badge.fury.io/bo/plupload-angular-directive.svg)](http://badge.fury.io/bo/plupload-angular-directive)
